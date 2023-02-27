@@ -1,4 +1,6 @@
 import { useState } from 'react';
+// npm install uuid (for unique id for each object)
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import TodoForm from './components/Todos/TodoForm';
 import TodoList from './components/Todos/TodoList';
@@ -6,7 +8,14 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   const addTodoHandler = (text) => {
-    setTodos([...todos, text]);
+    const newTodo = {
+      text: text,
+      isCompleted: false,
+      // uuidv4 function that create unique id for object
+      id: uuidv4(),
+    };
+    console.log(newTodo);
+    setTodos([...todos, newTodo]);
   };
 
   const deleteTodoHandler = (index) => {
