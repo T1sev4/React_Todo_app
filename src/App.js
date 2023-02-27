@@ -9,18 +9,17 @@ function App() {
 
   const addTodoHandler = (text) => {
     const newTodo = {
-      text: text,
+      text,
       isCompleted: false,
       // uuidv4 function that create unique id for object
       id: uuidv4(),
     };
-    console.log(newTodo);
     setTodos([...todos, newTodo]);
   };
 
-  const deleteTodoHandler = (index) => {
+  const deleteTodoHandler = (id) => {
     // если мы не используем первый параметр функции filter можем поставить "_"
-    setTodos(todos.filter((_, idx) => idx !== index));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
   return (
     <div className="App">
