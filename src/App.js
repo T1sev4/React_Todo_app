@@ -3,12 +3,15 @@ import { v4 as uuidv4 } from 'uuid';
 import TodoForm from './components/Todos/TodoForm';
 import TodoList from './components/Todos/TodoList';
 import TodosActions from './components/Todos/TodosActions';
+import TodoSearch from './components/Todos/TodoSearch';
 import './App.css';
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
+  const [searchText, setSearchText] = useState('');
 
+  // CRUD //
   const addTodoHandler = (text) => {
     const newTodo = {
       text,
@@ -37,8 +40,12 @@ function App() {
       )
     );
   };
-  
 
+   // CRUD //
+
+
+  // Buttons //
+  
   const resetTodosHandler = () => {
     setTodos([]);
   };
@@ -48,6 +55,19 @@ function App() {
   };
 
   const completedTodosCount = todos.filter((todo) => todo.isCompleted).length;
+
+  // Buttons //
+
+  // функция которая смотрит на изменение в инпуте
+  const searchHandler = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  // функция показывает только те туду которые есть в searchText
+  const filteredTodos = todos.filter((todo) =>
+    todo.text.toLowerCase().includes(searchText.toLowerCase())
+  );
+  
 
   return (
     <div className="App">
@@ -61,8 +81,10 @@ function App() {
         />
       )}
 
+      <TodoSearch  value={searchText} onChange={searchHandler}  />
+
       <TodoList
-        todos={todos}
+        todos={filteredTodos}
         deleteTodo={deleteTodoHandler}
         toggleTodo={toggleTodoHandler}
         changeTodoText={changeTodoText}
