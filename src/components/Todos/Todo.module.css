@@ -43,15 +43,39 @@
 }
 
 .checkIcon:hover,
-.deleteIcon:hover {
+.deleteIcon:hover,
+.saveIcon:hover,
+.cancelIcon:hover{
   cursor: pointer;
   transform: scale(1.3);
 }
 
-.checkIcon:hover {
+.checkIcon:hover, .saveIcon:hover {
   color: green;
 }
 
-.deleteIcon:hover {
+.deleteIcon:hover, .cancelIcon:hover {
   color: red;
 }
+.editInputBlock{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.editInput {
+  padding: 4px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  width: 70%;
+  font-size: 24px;
+}
+
+.saveIcon, 
+.cancelIcon {
+  margin-right: 5px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+

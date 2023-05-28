@@ -1,37 +1,43 @@
 import { useState } from 'react';
-// npm install uuid (for unique id for each object)
 import { v4 as uuidv4 } from 'uuid';
 import TodoForm from './components/Todos/TodoForm';
 import TodoList from './components/Todos/TodoList';
 import TodosActions from './components/Todos/TodosActions';
 import './App.css';
+
 function App() {
   const [todos, setTodos] = useState([]);
+  const [text, setText] = useState('');
 
   const addTodoHandler = (text) => {
     const newTodo = {
       text,
       isCompleted: false,
-      // uuidv4 function that create unique id for object
       id: uuidv4(),
     };
     setTodos([...todos, newTodo]);
   };
 
   const deleteTodoHandler = (id) => {
-    // если мы не используем первый параметр функции filter можем поставить "_"
     setTodos(todos.filter((todo) => todo.id !== id));
   };
-
-  const toggleTodoHandler = (id) => {
+  // функция для того чтобы сохранить isComplited
+  const toggleTodoHandler = (id, newText) => {
     setTodos(
       todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, isCompleted: !todo.isCompleted }
-          : { ...todo }
+        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted, text: newText } : todo
       )
     );
   };
+  // функция для сохранения изменения
+  const changeTodoText = (id, newText) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, text: newText } : todo
+      )
+    );
+  };
+  
 
   const resetTodosHandler = () => {
     setTodos([]);
@@ -46,7 +52,7 @@ function App() {
   return (
     <div className="App">
       <h1>Todo App</h1>
-      <TodoForm addTodo={addTodoHandler} />
+      <TodoForm addTodo={addTodoHandler} setText={setText} />
       {!!todos.length && (
         <TodosActions
           completedTodosExist={!!completedTodosCount}
@@ -59,6 +65,8 @@ function App() {
         todos={todos}
         deleteTodo={deleteTodoHandler}
         toggleTodo={toggleTodoHandler}
+        changeTodoText={changeTodoText}
+        setText={setText}
       />
 
       {completedTodosCount > 0 && (

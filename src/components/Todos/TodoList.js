@@ -1,6 +1,6 @@
 import Todo from './Todo';
 import styles from './TodoList.module.css';
-function TodoList({ todos, deleteTodo, toggleTodo }) {
+function TodoList({ todos, deleteTodo, toggleTodo, changeTodoText }) {
   return (
     <div className={styles.todoListContainer}>
       {!todos.length && <h2>Todo list is empty</h2>}
@@ -10,6 +10,7 @@ function TodoList({ todos, deleteTodo, toggleTodo }) {
           todo={todo}
           deleteTodo={deleteTodo}
           toggleTodo={toggleTodo}
+          changeTodoText={changeTodoText}
         />
       ))}
     </div>
