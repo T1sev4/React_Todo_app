@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './TodoForm.module.css';
-import Button from '../UI/Button';
-import Input from '../UI/Input';
+import Button from '../../UI/Button';
+import Input from '../../UI/Input';
 function TodoForm({ addTodo }) {
   const [text, setText] = useState('');
   const onSubmitHandler = (event) => {
