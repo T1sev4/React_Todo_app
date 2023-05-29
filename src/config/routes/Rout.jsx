@@ -7,10 +7,10 @@ import Main from '../../components/Main/Main';
 export default function Rout(){
   return (
     <Routes>
-      <Route path="/" element={ <TodoApp />} />
+      <Route path="/" element={<Main />} />
+      <Route path="/todo" element={ <TodoApp />} />
       <Route path="/about" element={<About />} />
       <Route path="/meme" element={<Meme />} />
-      <Route path="/main" element={<Main />} />
     </Routes>
   )
 }

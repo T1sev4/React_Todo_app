@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './meme.css';
-export default function Meme() {
-  let url;
 
-  // const [memeUrl, setMeme] = useState("");
+export default function Meme() {
   const [meme, setMeme] = useState({
     topText: '',
     bottomText: '',
@@ -12,24 +10,33 @@ export default function Meme() {
   });
 
   const [allMemeImages, setAllMemeImages] = useState([]);
+  const [error, setError] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getMemes() {
-      const res = await fetch('https://api.imgflip.com/get_memes');
-      const data = await res.json();
-      setAllMemeImages(data.data.memes);
+      try {
+        const res = await fetch('https://api.imgflip.com/get_memes');
+        if (!res.ok) {
+          throw new Error('Failed to fetch memes');
+        }
+        const data = await res.json();
+        setAllMemeImages(data.data.memes);
+      } catch (error) {
+        setError(error.message);
+      }
     }
     getMemes();
   }, []);
 
-  function randomElement(item) {
+  function randomElement() {
     const randomEl = Math.floor(Math.random() * allMemeImages.length);
-    url = allMemeImages[randomEl].url;
+    const url = allMemeImages[randomEl].url;
     setMeme((prevMeme) => ({
       ...prevMeme,
       randomImage: url,
     }));
   }
+
   function handleChange(event) {
     const { name, value } = event.target;
     setMeme((prevMeme) => ({
@@ -37,6 +44,11 @@ export default function Meme() {
       [name]: value,
     }));
   }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+
   return (
     <div className="meme">
       <div action="" className="form">
